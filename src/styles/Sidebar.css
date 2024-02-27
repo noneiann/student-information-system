@@ -1,0 +1,142 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    text-decoration: none;
+
+}
+
+
+
+.nav-menu{
+position: absolute;
+top: 0;
+left: 0;
+height: 100vh;
+width: 80px;
+justify-content: center;
+background-color: #12171e;
+padding: 0.4rem 0.8rem;
+border-right: 1px solid #2d2d2d;
+transition: all 0.5s ease;
+}
+
+.nav-menu.active{
+width: 250px;
+}
+
+.menu-icon{
+    height: max-content;
+    color: white;
+    position: absolute;
+    left: 50%;
+    font-size: 1.5rem;
+    line-height: 50px;
+    transform: translateX(-35%);
+    cursor: pointer;
+    transition: all 0.5s ease;
+    z-index: 999;
+    margin-top: 15px;
+}
+.nav-menu.active .menu-icon{
+    left: 90%;
+    }
+
+.nav-menu .sidebar-logo{
+    opacity: 0;
+
+    margin-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    align-items: center;
+    width: 111%;
+    height: 50px;
+    margin-bottom: 100px;
+}
+.nav-menu.active .sidebar-logo{
+    opacity: 100;
+}
+.navlogo{
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu.nav-menu.active .sidebar-logo{
+    font-size: 2rem;
+    font-weight:700;
+    justify-content: center;
+    transform: translateX(0);
+    
+    border-bottom: 1px solid #2d2d2d;
+    transform: translateX(-5%);
+}
+.logo{
+    color: white;
+}
+.nav-menu ul li {
+    position: relative;
+    height: 50px;
+    width: 90%;
+    margin: 2rem auto;
+    line-height: 50px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    transition: all 0.5s ease;
+}
+
+.nav-menu.active ul li{
+    transition: all 0.5s ease;
+}
+
+.nav-menu ul li a {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 0.8rem;
+}
+
+.nav-menu ul li a:hover {
+    background-color: white;
+    color: #12171e;
+}
+
+.nav-menu ul li a .nav-icons{
+    min-width: 50px;
+    text-align: center;
+    height: 30px;
+    border-radius: 12px;
+    line-height: 50px;
+
+}
+
+.nav-menu .nav-item{
+    opacity: 0;
+}
+
+.nav-menu.active .nav-item{
+    opacity: 1;
+}
+
+.nav-menu ul li .tooltip {
+    position: absolute;
+    left: 125px;
+    background-color: #fff;
+    color: rgb(0, 0, 0);
+    top: 50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.2);
+    border-radius: .6rem;
+    padding: .4rem 1.2rem;
+    line-height: 1.8rem;
+    z-index: 20;
+    opacity: 0;
+}
+
+.nav-menu ul li:hover .tooltip{
+ opacity: 1;
+}
+.nav-menu.active ul li:hover .tooltip{
+    display: none;
+   }
