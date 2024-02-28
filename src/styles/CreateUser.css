@@ -1,19 +1,71 @@
-.createUser-container {
-    position:fixed;
+.popUp-container {
+    position: fixed;
     z-index: 5;
     left: 0;
-    top:0;
+    top: 0;
     width: 100%;
-    height:100%;
-    display:flex;
+    height: 100%;
+    display: flex;
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.4);
+
 }
 
-.createUser{
-    border-radius: 5px;
+.header {
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    transition: all 0.5s ease;
+}
+
+.popUp {
+    border-radius: 20px;
     padding: 2rem;
-    background-color: white;
+    background-color: #12171e;
     width: 40rem;
+}
+
+
+.studentCreateForm .btn {
+    display: block;
+    margin: auto;
+
+}
+
+.inputDiv {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.inputDiv input,
+.inputDiv select {
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    height: 3rem;
+}
+
+
+.inputDiv textarea {
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    height: 5rem;
+}
+
+label {
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    transform: translateY(80%);
+    transition: all 0.5s ease;
+}
+
+@media screen and (max-height: 768px) {
+    .popUp {
+        transform: scale(85%);
+    }
 }

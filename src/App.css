@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,7 +6,7 @@
 
 }
 
-body{
+body {
   background: #f3f5f9;
 }
 
@@ -33,11 +32,16 @@ body{
   padding-left: 1rem;
 }
 
-.Sidebar{
+.Sidebar {
   font-family: 'Josefin Sans', sans-serif;
 }
 
-.students{
-      font-family: "Roboto", sans-serif;
-      padding: 1rem;
+.students {
+  font-family: "Roboto", sans-serif;
+  padding: 1rem;
+}
+
+.courses {
+  font-family: "Roboto", sans-serif;
+  padding: 1rem;
 }

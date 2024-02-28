@@ -1,23 +1,26 @@
-import {app, BrowserWindow, nativeImage } from 'electron'
-import path from 'path'
+import { app, BrowserWindow } from 'electron';
+import path from 'path'; // Import path module
+import { initialize } from '@electron/remote/main/index.js';
+import { fileURLToPath } from 'url';
 import isDev from 'electron-is-dev'
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename); // Use path.dirname to get the directory name
 
+initialize();
 
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1280,
-    height: 720,
+    width: 1366,
+    height: 768,
+    icon: __dirname + 'favicon.ico',
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      contextIsolation: false
     },
-    icon:'public/favicon.ico'
-    
-    })
-
-
+  })
 
   win.loadURL(
     isDev
@@ -25,6 +28,7 @@ function createWindow() {
       : `file://${path.join(__dirname, '../build/index.html')}`
   )
 }
+
 
 app.on('ready', createWindow)
 
