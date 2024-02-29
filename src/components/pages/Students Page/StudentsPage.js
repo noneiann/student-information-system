@@ -4,6 +4,7 @@ import Table from './studentTable.js';
 import { Button } from '../../Button.js';
 import { CreateUser } from './CreateUser.js';
 import { CSVLink } from "react-csv";
+import Papa from "papaparse"
 
 /*
  *
@@ -12,6 +13,7 @@ import { CSVLink } from "react-csv";
  * it calls components studentTable.js and CreateUser.js
  * uses react-csv as the library for exporting csv's
  */
+
 export default function StudentsPage({ }) {
   const [createUserOpen, setCreateUserOpen] = useState(false); // createUser Panel opener
 
@@ -71,6 +73,16 @@ export default function StudentsPage({ }) {
 
   }
 
+  //onChangeHandler for the import CSV Function
+  const changeHandler = (event) => {
+    Papa.parse(event.target.files[0], {
+      header: true,
+      skipEmptyLines: true,
+      complete: (results) => {
+        setCourses([...courses, ...results.data]);
+      }
+    });
+  };
   // since the student objects are all inside the array students,
   // to delete a student, I filtered it from the array
   const handleDeleteStudent = (targetIndex) => {
@@ -87,10 +99,36 @@ export default function StudentsPage({ }) {
   const handleFileChange = (data) => {
     setFile(data); // Store the uploaded file data
   };
+
+  //pagination
+
+  const [studentsPerPage] = useState(10); 
+  const [currentPage, setCurrentPage] = useState(1);
+  const indexOfLastStudent = currentPage * studentsPerPage;
+  const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
+  const currentStudents = students.slice(indexOfFirstStudent, indexOfLastStudent);
+  
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
   useEffect(() => {
-    // Save students to localStorage on any changes
+    // Save students to localStorage on any changes to the students
     saveData();
   }, [students]);
+
+
+  
+
+
   return (
     <div className='students'>
 
@@ -102,14 +140,31 @@ export default function StudentsPage({ }) {
         <div className="studentLabel"><p>Students</p></div>
 
         <div className='btns'>
-
+        <button for="file-upload" className="createBtn csvLink" onClick={() => {
+            document.getElementById('file-upload').click();
+            document.getElementById('file-upload').value = null;
+          }}>
+            Import CSV
+            <input
+              className='btn' type="file" id='file-upload' name="file" accept=".csv" onChange={changeHandler} style={{ display: 'none' }} />
+          </button>
           <CSVLink filename={"Students.csv"} className='createBtn csvLink' data={students} headers={headers}>Export CSV</CSVLink>;
           <Button children='Add a Student' buttonSize='btn--medium' buttonStyle='btn--outline' onClick={() => { setCreateUserOpen(true); saveData() }}
           />
         </div>
       </div>
-      <Table students={students} deleteStudent={handleDeleteStudent} editStudent={handleEditStudent} />
+      <Table students={currentStudents} deleteStudent={handleDeleteStudent} editStudent={handleEditStudent} />
       {createUserOpen && <CreateUser headers={headers} students={students} courses={courses} onSubmit={handleAddStudent} closeUser={() => { setCreateUserOpen(false); setStudentToEdit(null) }} defaultValue={studentToEdit !== null && students[studentToEdit]} />}
+    
+      <div className="pagination">
+        <button className={`page-buttons ${currentPage === 1 ? 'disabled' : ''}`} onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
+        {Array.from({ length: Math.ceil(students.length / studentsPerPage) }, (_, i) => (
+          <button key={i} className={`page-buttons ${currentPage === i + 1 ? 'active' : ''}`} disabled={currentPage === i + 1} onClick={() =>  handlePageChange()}>{i + 1}</button>
+        ))}
+        <button className={`page-buttons ${currentPage === Math.ceil(courses.length / studentsPerPage) ? 'disabled' : ''}`} onClick={handleNextPage} disabled={currentPage === Math.ceil(courses.length / studentsPerPage)}>Next</button>
+      </div>
+
+
     </div>
 
 

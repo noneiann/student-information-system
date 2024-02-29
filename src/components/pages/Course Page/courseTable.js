@@ -12,23 +12,23 @@ const Table = ({ courses, deleteCourse, editCourse }) => {
       <table id='studentTable' className='table table-striped'>
         <thead>
           <tr>
-            <th key='courseCode'>Course Code</th>
-            <th key='courseName'>Course Name</th>
-            <th key='description' className='expand'>Description</th>
+            <th>Course Code</th>
+            <th>Course Name</th>
+            <th className='expand'>Description</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {courses.length === 0 ? (
             <tr>
-              <td colSpan="5">No Courses Found</td>
+              <td colSpan="4">No Courses Found</td>
             </tr>
           ) : (
             courses.map((c, idx) => (
-              <tr key={c.courseCode}>
-                <td key={c.courseCode}>{c.courseCode}</td>
-                <td key={c.courseName}>{c.courseName}</td>
-                <td className='expand' key={c.description}>{c.description}</td>
+              <tr key={idx}>
+                <td>{c.courseCode}</td>
+                <td>{c.courseName}</td>
+                <td>{c.description}</td>
                 <td>
                   <span>
                     <FontAwesomeIcon className='action-icon' icon={faPencil} onClick={() => editCourse(idx)} style={{ color: '#ffffff' }} />
@@ -44,4 +44,4 @@ const Table = ({ courses, deleteCourse, editCourse }) => {
   )
 }
 
-export default Table
+export default Table;

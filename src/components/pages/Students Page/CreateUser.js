@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '../../Button.js';
 import '../../../styles/CreateUser.css'
-export const CreateUser = ({ courses, closeUser, onSubmit, defaultValue }) => {
+export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue }) => {
   // State variables for user input
 
   const goodKey = '0123456789- ';
@@ -111,7 +111,7 @@ export const CreateUser = ({ courses, closeUser, onSubmit, defaultValue }) => {
               onChange={handleChange}
             >
               <option value="none" defaultValue>Select an Option</option>
-              {courses.map((c, idx) => <option value={c.courseName}>{c.courseName}</option>)}
+              {courses.map((c, idx) => <option value={`${c.courseCode}  ${c.courseName}`}>{c.courseCode}</option>)}
 
             </select>
           </div>

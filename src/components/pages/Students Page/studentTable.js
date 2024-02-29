@@ -24,10 +24,10 @@ const Table = ({ students, deleteStudent, editStudent }) => {
           {students.length === 0 ? (<tr>
             <td colSpan='5'>No Students Found</td>
           </tr>) : students.map((s, idx) => (
-            <tr key={s.idNumber}>
+            <tr key={idx}>
               <td key={s.idNumber}>{s.idNumber}</td>
               <td key={s.name}>{s.name}</td>
-              <td className='expand' key={s.courseCode}>{s.course}</td>
+              <td className='expand' key={s.courseCode}>{`${s.course}`}</td>
               <td key={s.yearLevel}>{s.yearLevel}</td>
               <td key={s.gender}>{s.gender}</td>
 
