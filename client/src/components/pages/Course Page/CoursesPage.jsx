@@ -1,34 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import './CoursePage.css';
-import Table from './courseTable.js';
-import { Button } from '../../Button.js';
-import { CreateCourse } from './CreateCourse.js';
+import Table from './courseTable.jsx';
+import { Button } from '../../Button.jsx';
+import { CreateCourse } from './CreateCourse.jsx';
 import { CSVLink } from "react-csv";
 import Papa from "papaparse"
 import { usePapaParse } from 'react-papaparse';
-import './Courses.csv'
 
-export default function CoursesPage(onCoursesUpdate) {
+export default function CoursesPage({courses, setCourses, students, setStudents, triggerStudentUpdate }) {
   const [createCourseOpen, setcreateCourseOpen] = useState(false);
-  const [courses, setCourses] = useState(() => {
-    // Retrieve saved courses from localStorage on initial render
-    const initialCourses = localStorage.getItem('courses');
-    try {
-      return initialCourses ? JSON.parse(initialCourses) : [];
-    } catch (error) {
-      console.error('Error parsing courses from localStorage:', error);
-      // Set courses to an empty array or display an error message to the user
-      return [];
-    }
-  });
+
 
   const [courseToEdit, setCourseToEdit] = useState(null)
   const [currentPage, setCurrentPage] = useState(1);
 
   const headers = [
-    { label: "Course Code", key: "courseCode" },
-    { label: "Course Name", key: "courseName" },
-    { label: "Description", key: "description" },
+    { label: "courseCode", key: "courseCode" },
+    { label: "courseName", key: "courseName" },
+    { label: "description", key: "description" },
   ];
 
   const { readRemoteFile } = usePapaParse();
@@ -48,16 +37,56 @@ export default function CoursesPage(onCoursesUpdate) {
   };
 
   const handleAddCourse = (newCourseData) => {
-    courseToEdit === null ?
-    setCourses([...courses, newCourseData]) : setCourses(courses.map((currCourse, idx) => {
-      if (idx !== courseToEdit) return currCourse;
-
-      return newCourseData;
-    }))
+    courseToEdit === null
+      ? setCourses([...courses, newCourseData])
+      : setCourses(courses.map((currCourse, idx) => {
+          if (idx !== courseToEdit) return currCourse;
+  
+          // Update students' course information
+          const updatedStudents = students.map((student) => {
+            if (
+              student.courseCode === currCourse.courseCode &&
+              student.courseName === currCourse.courseName
+            ) {
+              return {
+                ...student,
+                courseCode: newCourseData.courseCode,
+                courseName: newCourseData.courseName,
+              };
+            }
+            return student;
+          });
+  
+          setStudents(updatedStudents);
+          triggerStudentUpdate();
+  
+          return newCourseData;
+        }));
   };
 
   const handleDeleteCourse = (targetIndex) => {
+    const deletedCourse = courses[targetIndex];
     setCourses(courses.filter((_, idx) => idx !== targetIndex))
+    
+    const updatedStudents = Array.isArray(students) ? students.map(student => {
+      if (student.courseCode === deletedCourse.courseCode && student.courseName === deletedCourse.courseName) {
+        return {
+          ...student,
+          courseCode: '',
+          courseName: '',
+        };
+      }
+      return student;
+    }) : [];
+  
+    // Update the students state with the modified data
+    if (typeof setStudents === 'function') {
+      setStudents(updatedStudents);
+      if (typeof triggerStudentUpdate === 'function') {
+        triggerStudentUpdate(); // Call the function to trigger a re-render of the StudentsPage component
+      }
+    }
+    
   };
 
   const handleEditCourse = (targetIndex) => {
@@ -76,8 +105,8 @@ export default function CoursesPage(onCoursesUpdate) {
     });
   };
 
-  //pagination
-  const [coursesPerPage] = useState(10); // Adjust the number of courses per page as needed
+ 
+  const [coursesPerPage] = useState(7); 
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
@@ -122,7 +151,9 @@ export default function CoursesPage(onCoursesUpdate) {
       </div>
       <Table courses={currentCourses} deleteCourse={handleDeleteCourse} editCourse={handleEditCourse} />
       {createCourseOpen && <CreateCourse headers={headers} onSubmit={handleAddCourse} defaultValue={courseToEdit !== null && courses[courseToEdit]} closeUser={() => { setcreateCourseOpen(false); }} />}
-      {/* Pagination */}
+
+
+
       <div className="pagination">
         <button className={`page-buttons ${currentPage === 1 ? 'disabled' : ''}`} onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
         {Array.from({ length: Math.ceil(courses.length / coursesPerPage) }, (_, i) => (

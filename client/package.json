@@ -1,6 +1,7 @@
 {
   "name": "student-information-system",
   "version": "0.1.0",
+  "proxy": "http://localhost:5000",
   "author": "Rey Iann TIgley",
   "description": "Student Info System",
   "homepage": "./",

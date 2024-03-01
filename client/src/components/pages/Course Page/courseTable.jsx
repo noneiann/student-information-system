@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../../../styles/Table.css'
+import '../../../styles/courseTable.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
@@ -8,8 +8,8 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Table = ({ courses, deleteCourse, editCourse }) => {
   return (
-    <div className='table-wrapper'>
-      <table id='studentTable' className='table table-striped'>
+    <div className='courseTable-wrapper'>
+      <table id='courseTable' className='courseTable table-striped'>
         <thead>
           <tr>
             <th>Course Code</th>

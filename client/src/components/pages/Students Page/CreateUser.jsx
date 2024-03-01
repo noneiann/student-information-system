@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from '../../Button.js';
+import { Button } from '../../Button.jsx';
 import '../../../styles/CreateUser.css'
+import axios from 'axios';
+
 export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue }) => {
   // State variables for user input
 
@@ -10,8 +12,10 @@ export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue
     name: '',
     yearLevel: '1st Year',
     gender: 'Male',
-    course: ''
-  })
+    courseCode: '', 
+    courseName: '', 
+    enrollmentStatus:'Not Enrolled',
+  });
   const styles = {
     margin: 'auto',
     color: 'rgba(255,0,0,0.5)',
@@ -39,6 +43,8 @@ export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue
 
   }
 
+
+
   // Function to handle form submission
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -50,22 +56,63 @@ export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue
     if (onSubmit) {
       onSubmit(student);
     }
-
     // Close the form after submission  
     closeUser()
   };
 
-
-  const handleIdChange = (e) => {
-    const allowedCharsRegExp = new RegExp(`[${goodKey.split("").sort().join("")}]`, 'gi');
-    const filteredValue = e.target.value.replace(/[^0-9\- ]/gi, '');
-
+  const [idNumberYear, setIdNumberYear] = useState(
+    defaultValue ? defaultValue.idNumber.split('-')[0] : ''
+  );
+  const [idNumberNum, setIdNumberNum] = useState(
+    defaultValue ? defaultValue.idNumber.split('-')[1] : ''
+  );
+  
+  const handleIdYearChange = (e) => {
+    let filteredValue = e.target.value.replace(/[^0-9\- ]/gi, '');
+    filteredValue = filteredValue.slice(0, 4);
+    setIdNumberYear(filteredValue);
+    setIdNumberNum(idNumberNum);
+  
+    const updatedId = filteredValue + '-' + idNumberNum;
     setStudent({
-      ...student, [e.target.name]: filteredValue
+      ...student,
+      idNumber: updatedId
     });
   }
+  
+  const handleIdNumChange = (e) => {
+    let filteredValue = e.target.value.replace(/[^0-9\- ]/gi, '');
+    filteredValue = filteredValue.slice(0, 4);
+    setIdNumberNum(filteredValue);
+    setIdNumberYear(idNumberYear);
+  
+    const updatedId = idNumberYear + '-' + filteredValue;
+    setStudent({
+      ...student,
+      idNumber: updatedId
+    });
+  }
+  
+
   const handleChange = (e) => {
-    setStudent({ ...student, [e.target.name]: e.target.value });
+    if (e.target.name === "course") {
+      const selectedCourse = courses.find(c => `${c.courseCode}  ${c.courseName}` === e.target.value);
+      if (selectedCourse) {
+        setStudent({
+          ...student,
+          courseCode: selectedCourse.courseCode,
+          courseName: selectedCourse.courseName,
+        });
+      } else {
+        setStudent({
+          ...student,
+          courseCode: '',
+          courseName: '',
+        });
+      }
+    } else {
+      setStudent({ ...student, [e.target.name]: e.target.value });
+    }
   };
 
   return (
@@ -79,15 +126,27 @@ export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue
             Fill in the Details
           </div>
           <div className='inputDiv'>
+            <div style={{display: "inline"}}>
             <label htmlFor="idNumber">ID Number: </label>
-            <input
-              type="text"
-              className='form-control'
-              id='idNumber'
-              name='idNumber'
-              value={student.idNumber}
-              onChange={handleIdChange}
-            />
+              <input
+                type="text"
+                className='form-control'
+                id='idNumberYear'
+                name='idNumberYear'
+                value={idNumberYear}
+                onChange={handleIdYearChange}
+              />
+              <span style={{'font-size': '30px', color: 'white', 'margin-left': '5px','margin-right': '5px'}}>-</span>
+              <input
+                type="text"
+                className='form-control'
+                id='idNumberFinal'
+                name='idNumber'
+                value={idNumberNum}
+                onChange={handleIdNumChange}
+              />
+
+            </div>
           </div>
           <div className='inputDiv'>
             <label htmlFor="name">Name: </label>
@@ -113,6 +172,22 @@ export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue
               <option value="none" defaultValue>Select an Option</option>
               {courses.map((c, idx) => <option value={`${c.courseCode}  ${c.courseName}`}>{c.courseCode}</option>)}
 
+            </select>
+          </div>
+
+          <div className='inputDiv'>
+            <label htmlFor="course">Enrollment Status: </label>
+            <select
+              type="text"
+              className='form-control'
+              id='enrollmentStatus'
+              name="enrollmentStatus"
+              value={student.enrollmentStatus}
+              onChange={handleChange}
+            >
+              
+              <option value="Not Enrolled" defaultValue>Not Enrolled</option>
+              {student.courseCode && <option value="Enrolled">Enrolled</option>}
             </select>
           </div>
           <div className='inputDiv'>

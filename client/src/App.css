@@ -45,3 +45,7 @@ body {
   font-family: "Roboto", sans-serif;
   padding: 1rem;
 }
+
+#text {
+  color: white;
+}

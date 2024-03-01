@@ -15,6 +15,7 @@ const Table = ({ students, deleteStudent, editStudent }) => {
             <th>ID</th>
             <th>Name</th>
             <th className='expand'>Course</th>
+            <th>Enrollment Status</th>
             <th>Year Level</th>
             <th>Gender</th>
             <th>Actions</th>
@@ -27,7 +28,8 @@ const Table = ({ students, deleteStudent, editStudent }) => {
             <tr key={idx}>
               <td key={s.idNumber}>{s.idNumber}</td>
               <td key={s.name}>{s.name}</td>
-              <td className='expand' key={s.courseCode}>{`${s.course}`}</td>
+              <td className='expand' key={s.courseCode}>{s.courseCode && s.courseName ? `${s.courseCode} ${s.courseName}` : 'No Course'}</td>
+              <td key={s.enrollmentStatus}>{s.enrollmentStatus}</td>
               <td key={s.yearLevel}>{s.yearLevel}</td>
               <td key={s.gender}>{s.gender}</td>
 

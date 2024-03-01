@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../../Button.js';
+import { Button } from '../../Button.jsx';
 import '../../../styles/CreateUser.css'
 
 export const CreateCourse = ({ closeUser, onSubmit, defaultValue }) => {
@@ -10,6 +10,7 @@ export const CreateCourse = ({ closeUser, onSubmit, defaultValue }) => {
     courseName: '',
     description: '',
   })
+  
   const [errors, setErrors] = useState('');
   const validateForm = () => {
 
