@@ -1,5 +1,4 @@
 idNumber,name,yearLevel,gender,courseCode,courseName,enrollmentStatus
-2022-0012,Matthew Harris,4th Year,Male,BSPHY,Bachelor of Science in Physics,Enrolled
 2022-0013,Avery Thompson,1st Year,Female,BSCJ,Bachelor of Science in Criminology and Justice,Not Enrolled
 2022-0014,Andrew Garcia,3rd Year,Male,BSBA,Bachelor of Science in Business Administration,Enrolled
 2022-0015,Abigail Martinez,2nd Year,Female,BSBIO,Bachelor of Science in Biology,Enrolled
@@ -38,4 +37,5 @@ idNumber,name,yearLevel,gender,courseCode,courseName,enrollmentStatus
 2022-0048,William Morales,4th Year,Male,BSPHY,Bachelor of Science in Physics,Enrolled
 2022-0049,Sophia Jimenez,1st Year,Female,BSCJ,Bachelor of Science in Criminology and Justice,Not Enrolled
 2022-0050,Daniel Ramos,3rd Year,Male,BSBA,Bachelor of Science in Business Administration,Enrolled
-2022-0224,Rey Iann V. Tigley,2nd Year,Male,BSEE,Bachelor of Science in Electrical Engineering,Enrolled
+2022-0224,Rey Iann V. Tigley,2nd Year,Male,BSCS,Bachelor of Science in Cybersecurity,Enrolled
+2022-0527,Elia Fel Bado,2nd Year,Female,BSCS,Bachelor of Science in Computer Science,Enrolled

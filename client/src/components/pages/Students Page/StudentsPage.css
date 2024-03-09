@@ -8,7 +8,7 @@
     font-size: large;
     font-weight: 700;
     overflow: hidden;
-    width: 55em;
+    width: 72em;
     max-width: 90%;
     padding-top: 50px;
     transition: all 0.5s ease;
@@ -38,7 +38,7 @@ h1 {
     position: relative;
     padding-top: 50px;
     width: 100%;
-
+    display: flex;
 
 }
 
@@ -64,4 +64,52 @@ h1 {
 
 .csvLink:active {
     transform: translateY(2px);
+}
+
+.search-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    margin-right: 20px;
+}
+
+.searchTerm{
+    width: 200px;
+    padding: 8px 20px;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: #12171e;
+    color: #fff;
+    border-color: #fff;
+    
+}
+
+.searchTerm:focus{
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 0%;
+}
+.searchOption{
+    background-color: transparent;
+    color: #fff;
+    padding: 8px 20px;
+    border: 1px solid var(#fff);
+    transition: all 0.3s ease-out;
+    padding: 6px 15px;
+    font-size: 15px;
+}
+
+.searchTerm, .searchOption {
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+option{
+    background-color: #12171e;
+    color: #fff;
+    padding: 8px 20px;
+    border: 1px solid var(#fff);
+    transition: all 0.3s ease-out;
+    padding: 6px 15px;
+    font-size: 15px;
 }

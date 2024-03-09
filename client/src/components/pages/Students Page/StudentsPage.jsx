@@ -8,20 +8,19 @@ import Papa from "papaparse"
 
 export default function StudentsPage({ students, courses, setStudents, setCourses }) {
   const [createUserOpen, setCreateUserOpen] = useState(false);
-  const [studentToEdit, setStudentToEdit] = useState(null)
-
+  const [studentToEdit, setStudentToEdit] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchOption, setSearchOption] = useState('idNumber');
   const headers = [
     { label: "idNumber", key: "idNumber" },
     { label: "name", key: "name" },
-    { label: "course", key: "course" },
-    { label: "enrollmentStatus", key: "enrollmentStatus" },
     { label: "yearLevel", key: "yearLevel" },
-    { label: "gender", key: "gender" }
+    { label: "gender", key: "gender" },
+    { label: "courseCode", key: "courseCode" },
+    { label: "courseName", key: "courseName" },
+    { label: "enrollmentStatus", key: "enrollmentStatus" }
   ];
 
-  const saveData = () => {
-    localStorage.setItem('students', JSON.stringify(students));
-  };
 
   const handleAddStudent = (newStudentData) => {
     studentToEdit === null ?
@@ -42,20 +41,33 @@ export default function StudentsPage({ students, courses, setStudents, setCourse
     });
   };
 
+
   const handleDeleteStudent = (targetIndex) => {
     setStudents(students.filter((_, idx) => idx !== targetIndex))
   }
 
   const handleEditStudent = (targetIndex) => {
-    setStudentToEdit(targetIndex)
-    setCreateUserOpen(true)
-  }
+    // Find the index of the student in the original unfiltered array
+    const originalIndex = students.findIndex(student => student === filteredStudents[targetIndex]);
+  
+    // Check if the student is found
+    if (originalIndex !== -1) {
+      // Pass the original index to setStudentToEdit
+      setStudentToEdit(originalIndex);
+      setCreateUserOpen(true);
+    }
+  };
+  
+
+  const filteredStudents = students.filter(student =>
+    student[searchOption].toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const [studentsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
-  const currentStudents = students.slice(indexOfFirstStudent, indexOfLastStudent);
+  const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -69,10 +81,6 @@ export default function StudentsPage({ students, courses, setStudents, setCourse
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
-  useEffect(() => {
-    saveData();
-  }, [students]);
-
   return (
     <div className='students'>
       {console.log(students)}
@@ -81,8 +89,29 @@ export default function StudentsPage({ students, courses, setStudents, setCourse
       </div>
       <div className='studentTop'>
         <div className="studentLabel"><p>Students</p></div>
-
+        
         <div className='btns'>
+          <div className='search-container'>
+          <input
+          className='searchTerm'
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <select
+              type="text"
+              className='searchOption'
+              id='course'
+              name="course"
+              onChange={(e) => {
+                setSearchOption(e.target.value);
+              }}
+            >
+              <option value="idNumber" defaultValue>ID Number</option>
+              <option value="name">Name</option>
+            </select>
+          </div>
           <button for="file-upload" className="createBtn csvLink" onClick={() => {
             document.getElementById('file-upload').click();
             document.getElementById('file-upload').value = null;
@@ -92,7 +121,7 @@ export default function StudentsPage({ students, courses, setStudents, setCourse
               className='btn' type="file" id='file-upload' name="file" accept=".csv" onChange={changeHandler} style={{ display: 'none' }} />
           </button>
           <CSVLink filename={"Students.csv"} className='createBtn csvLink' data={students} headers={headers}>Export CSV</CSVLink>;
-          <Button children='Add a Student' buttonSize='btn--medium' buttonStyle='btn--outline' onClick={() => { setCreateUserOpen(true); saveData() }} />
+          <Button children='Add a Student' buttonSize='btn--medium' buttonStyle='btn--outline' onClick={() => { setCreateUserOpen(true)}} />
         </div>
       </div>
       <Table students={currentStudents} deleteStudent={handleDeleteStudent} editStudent={handleEditStudent} />
@@ -100,10 +129,10 @@ export default function StudentsPage({ students, courses, setStudents, setCourse
 
       <div className="pagination">
         <button className={`page-buttons ${currentPage === 1 ? 'disabled' : ''}`} onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
-        {Array.from({ length: Math.ceil(students.length / studentsPerPage) }, (_, i) => (
+        {Array.from({ length: Math.ceil(filteredStudents.length / studentsPerPage) }, (_, i) => (
           <button key={i} className={`page-buttons ${currentPage === i + 1 ? 'active' : ''}`} disabled={currentPage === i + 1} onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
         ))}
-        <button className={`page-buttons ${currentPage === Math.ceil(students.length / studentsPerPage) ? 'disabled' : ''}`} onClick={handleNextPage} disabled={currentPage === Math.ceil(students.length / studentsPerPage)}>Next</button>
+        <button className={`page-buttons ${currentPage === Math.ceil(filteredStudents.length / studentsPerPage) ? 'disabled' : ''}`} onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredStudents.length / studentsPerPage)}>Next</button>
       </div>
     </div>
   );

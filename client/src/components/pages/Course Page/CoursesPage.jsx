@@ -13,6 +13,9 @@ export default function CoursesPage({courses, setCourses, students, setStudents,
 
   const [courseToEdit, setCourseToEdit] = useState(null)
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const [searchOption,setSearchOption] = useState('courseCode');
 
   const headers = [
     { label: "courseCode", key: "courseCode" },
@@ -94,22 +97,14 @@ export default function CoursesPage({courses, setCourses, students, setStudents,
     setcreateCourseOpen(true)
   };
 
-  const handleReadRemoteFile = () => {
-    const url = 'your_file_url_here';
-    readRemoteFile(url, {
-      complete: (results) => {
-        console.log('---------------------------');
-        console.log('Results:', results);
-        console.log('---------------------------');
-      },
-    });
-  };
+  const filteredCourses = courses.filter(course =>
+    course[searchOption].toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
- 
   const [coursesPerPage] = useState(7); 
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-  const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
+  const currentCourses = filteredCourses.slice(indexOfFirstCourse, indexOfLastCourse);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -136,6 +131,27 @@ export default function CoursesPage({courses, setCourses, students, setStudents,
         <div className="courseLabel"><p>Courses</p></div>
 
         <div className='btns'>
+        <div className='search-container'>
+          <input
+          className='searchTerm'
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <select
+              type="text"
+              className='searchOption'
+              id='course'
+              name="course"
+              onChange={(e) => {
+                setSearchOption(e.target.value);
+              }}
+            >
+              <option value="courseCode" defaultValue>Course Code</option>
+              <option value="courseName">Course Name</option>
+            </select>
+          </div>
           <button for="file-upload" className="createBtn csvLink" onClick={() => {
             document.getElementById('file-upload').click();
             document.getElementById('file-upload').value = null;
@@ -156,10 +172,10 @@ export default function CoursesPage({courses, setCourses, students, setStudents,
 
       <div className="pagination">
         <button className={`page-buttons ${currentPage === 1 ? 'disabled' : ''}`} onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
-        {Array.from({ length: Math.ceil(courses.length / coursesPerPage) }, (_, i) => (
+        {Array.from({ length: Math.ceil(filteredCourses.length / coursesPerPage) }, (_, i) => (
           <button key={i} className={`page-buttons ${currentPage === i + 1 ? 'active' : ''}`} disabled={currentPage === i + 1} onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
         ))}
-        <button className={`page-buttons ${currentPage === Math.ceil(courses.length / coursesPerPage) ? 'disabled' : ''}`} onClick={handleNextPage} disabled={currentPage === Math.ceil(courses.length / coursesPerPage)}>Next</button>
+        <button className={`page-buttons ${currentPage === Math.ceil(filteredCourses.length / coursesPerPage) ? 'disabled' : ''}`} onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredCourses.length / coursesPerPage)}>Next</button>
       </div>
     </div>
   );
