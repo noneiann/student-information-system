@@ -11,6 +11,26 @@ export default function StudentsPage({ students, courses, setStudents, setCourse
   const [studentToEdit, setStudentToEdit] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOption, setSearchOption] = useState('idNumber');
+  const [sortOrder, setSortOrder] = useState({ column: null, direction: null });
+
+  const filteredStudents = students.filter(student =>
+    student[searchOption].toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const sortedStudents = filteredStudents.sort((a, b) => {
+    if (sortOrder.column === null) {
+      return 0;
+    } else if (a[sortOrder.column] < b[sortOrder.column]) {
+      return sortOrder.direction === 'asc' ? -1 : 1;
+    } else if (a[sortOrder.column] > b[sortOrder.column]) {
+      return sortOrder.direction === 'asc' ? 1 : -1;
+    } else {
+      return 0;
+    }
+  });
+
+
+  
   const headers = [
     { label: "idNumber", key: "idNumber" },
     { label: "name", key: "name" },
@@ -23,14 +43,14 @@ export default function StudentsPage({ students, courses, setStudents, setCourse
 
 
   const handleAddStudent = (newStudentData) => {
-    studentToEdit === null ?
-      setStudents([...students, newStudentData]) : setStudents(students.map((currStudent, idx) => {
-        if (idx !== studentToEdit) return currStudent;
-
-        return newStudentData;
-      }))
+    if (studentToEdit === null) {
+      setStudents([...students, newStudentData]);
+    } else {
+      const updatedStudents = [...students];
+      updatedStudents[studentToEdit] = newStudentData;
+      setStudents(updatedStudents);
+    }
   }
-
   const changeHandler = (event) => {
     Papa.parse(event.target.files[0], {
       header: true,
@@ -41,33 +61,41 @@ export default function StudentsPage({ students, courses, setStudents, setCourse
     });
   };
 
+  const handleSort = (column) => {
+    let direction;
+    if (sortOrder.column === column && sortOrder.direction === 'asc') {
+    direction = 'desc';
+  } else {
+    direction = 'asc';
+  }
+  setSortOrder({ column, direction });
+  };
 
   const handleDeleteStudent = (targetIndex) => {
-    setStudents(students.filter((_, idx) => idx !== targetIndex))
+    const studentToDelete = currentStudents[targetIndex];
+    const originalIndex = students.findIndex(student => student === studentToDelete);
+
+    if (originalIndex !== -1) {
+      setStudents(sortedStudents.filter((_, idx) => idx !== originalIndex))
+    }
+    
   }
 
-  const handleEditStudent = (targetIndex) => {
-    // Find the index of the student in the original unfiltered array
-    const originalIndex = students.findIndex(student => student === filteredStudents[targetIndex]);
-  
-    // Check if the student is found
-    if (originalIndex !== -1) {
-      // Pass the original index to setStudentToEdit
-      setStudentToEdit(originalIndex);
-      setCreateUserOpen(true);
-    }
-  };
-  
+const handleEditStudent = (targetIndex) => {
+  const studentToEdit = currentStudents[targetIndex];
+  const originalIndex = students.findIndex(student => student === studentToEdit);
 
-  const filteredStudents = students.filter(student =>
-    student[searchOption].toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  if (originalIndex !== -1) {
+    setStudentToEdit(originalIndex);
+    setCreateUserOpen(true);
+  }
+};
 
   const [studentsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
-  const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
+  const currentStudents = sortedStudents.slice(indexOfFirstStudent, indexOfLastStudent);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -81,6 +109,11 @@ export default function StudentsPage({ students, courses, setStudents, setCourse
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+  
   return (
     <div className='students'>
       {console.log(students)}
@@ -124,16 +157,15 @@ export default function StudentsPage({ students, courses, setStudents, setCourse
           <Button children='Add a Student' buttonSize='btn--medium' buttonStyle='btn--outline' onClick={() => { setCreateUserOpen(true)}} />
         </div>
       </div>
-      <Table students={currentStudents} deleteStudent={handleDeleteStudent} editStudent={handleEditStudent} />
+      <Table students={currentStudents} deleteStudent={handleDeleteStudent} editStudent={handleEditStudent} handleSort={handleSort} sortOrder={sortOrder} />
       {createUserOpen && <CreateUser headers={headers} students={students} courses={courses} onSubmit={handleAddStudent} closeUser={() => { setCreateUserOpen(false); setStudentToEdit(null) }} defaultValue={studentToEdit !== null && students[studentToEdit]} />}
-
       <div className="pagination">
-        <button className={`page-buttons ${currentPage === 1 ? 'disabled' : ''}`} onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
-        {Array.from({ length: Math.ceil(filteredStudents.length / studentsPerPage) }, (_, i) => (
-          <button key={i} className={`page-buttons ${currentPage === i + 1 ? 'active' : ''}`} disabled={currentPage === i + 1} onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
-        ))}
-        <button className={`page-buttons ${currentPage === Math.ceil(filteredStudents.length / studentsPerPage) ? 'disabled' : ''}`} onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredStudents.length / studentsPerPage)}>Next</button>
-      </div>
+  <button className={`page-buttons ${currentPage === 1 ? 'disabled' : ''}`} onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
+  {Array.from({ length: Math.ceil(sortedStudents.length / studentsPerPage) }, (_, i) => (
+    <button key={i} className={`page-buttons ${currentPage === i + 1 ? 'active' : ''}`} disabled={currentPage === i + 1} onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
+  ))}
+  <button className={`page-buttons ${currentPage === Math.ceil(sortedStudents.length / studentsPerPage) ? 'disabled' : ''}`} onClick={handleNextPage} disabled={currentPage === Math.ceil(sortedStudents.length / studentsPerPage)}>Next</button>
+</div>
     </div>
   );
 }

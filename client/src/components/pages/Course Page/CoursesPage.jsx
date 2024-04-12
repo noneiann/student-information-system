@@ -5,7 +5,7 @@ import { Button } from '../../Button.jsx';
 import { CreateCourse } from './CreateCourse.jsx';
 import { CSVLink } from "react-csv";
 import Papa from "papaparse"
-import { usePapaParse } from 'react-papaparse';
+
 
 export default function CoursesPage({courses, setCourses, students, setStudents, triggerStudentUpdate }) {
   const [createCourseOpen, setcreateCourseOpen] = useState(false);
@@ -16,14 +16,13 @@ export default function CoursesPage({courses, setCourses, students, setStudents,
   const [searchTerm, setSearchTerm] = useState('');
 
   const [searchOption,setSearchOption] = useState('courseCode');
+  const [sortOrder,setSortOrder] = useState({column: null, direction: null})
 
   const headers = [
     { label: "courseCode", key: "courseCode" },
     { label: "courseName", key: "courseName" },
     { label: "description", key: "description" },
   ];
-
-  const { readRemoteFile } = usePapaParse();
 
   const changeHandler = (event) => {
     Papa.parse(event.target.files[0], {
@@ -35,9 +34,6 @@ export default function CoursesPage({courses, setCourses, students, setStudents,
     });
   };
 
-  const saveData = () => {
-    localStorage.setItem('courses', JSON.stringify(courses));
-  };
 
   const handleAddCourse = (newCourseData) => {
     courseToEdit === null
@@ -45,7 +41,7 @@ export default function CoursesPage({courses, setCourses, students, setStudents,
       : setCourses(courses.map((currCourse, idx) => {
           if (idx !== courseToEdit) return currCourse;
   
-          // Update students' course information
+
           const updatedStudents = students.map((student) => {
             if (
               student.courseCode === currCourse.courseCode &&
@@ -68,43 +64,73 @@ export default function CoursesPage({courses, setCourses, students, setStudents,
   };
 
   const handleDeleteCourse = (targetIndex) => {
-    const deletedCourse = courses[targetIndex];
-    setCourses(courses.filter((_, idx) => idx !== targetIndex))
-    
-    const updatedStudents = Array.isArray(students) ? students.map(student => {
-      if (student.courseCode === deletedCourse.courseCode && student.courseName === deletedCourse.courseName) {
-        return {
-          ...student,
-          courseCode: '',
-          courseName: '',
-        };
-      }
-      return student;
-    }) : [];
+    const courseToDelete = currentCourses[targetIndex];
+    const originalIndex = courses.findIndex(course => course === courseToDelete);
   
-    // Update the students state with the modified data
-    if (typeof setStudents === 'function') {
+    if (originalIndex !== -1) {
+      const deletedCourse = courses[originalIndex];
+      const updatedCourses = courses.filter((_, idx) => idx !== originalIndex);
+      setCourses(updatedCourses);
+  
+      const updatedStudents = students.map(student => {
+        if (student.courseCode === deletedCourse.courseCode && student.courseName === deletedCourse.courseName) {
+          return {
+            ...student,
+            courseCode: '',
+            courseName: '',
+            enrollmentStatus: 'Not Enrolled',
+          };
+        }
+        return student;
+      });
+  
       setStudents(updatedStudents);
-      if (typeof triggerStudentUpdate === 'function') {
-        triggerStudentUpdate(); // Call the function to trigger a re-render of the StudentsPage component
-      }
+      triggerStudentUpdate();
     }
-    
   };
 
+
   const handleEditCourse = (targetIndex) => {
-    setCourseToEdit(targetIndex)
-    setcreateCourseOpen(true)
+    const courseToEdit = currentCourses[targetIndex];
+    const originalIndex = courses.findIndex(course => course === courseToEdit);
+  
+    if (originalIndex !== -1) {
+      setCourseToEdit(originalIndex);
+      setcreateCourseOpen(true);
+    }
   };
+  const handleSort = (column) => {
+    let direction;
+    if (sortOrder.column === column && sortOrder.direction === 'asc') {
+      direction = 'desc';
+    } else {
+      direction = 'asc';
+    }
+    setSortOrder({ column, direction });
+  }
 
   const filteredCourses = courses.filter(course =>
     course[searchOption].toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
+  const sortedCourses = filteredCourses.sort((a,b) => {
+    if (sortOrder.column === null){
+      return 0;
+    } else if (a[sortOrder.column] < b[sortOrder.column]) {
+      if(sortOrder.direction === 'asc'){
+        return -1
+      } else return 1;
+    } else if (a[sortOrder.column] > b[sortOrder.column]){
+      if(sortOrder.direction === 'asc'){
+        return 1
+      } else return -1;
+    } else return 0;
+  })
 
   const [coursesPerPage] = useState(7); 
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-  const currentCourses = filteredCourses.slice(indexOfFirstCourse, indexOfLastCourse);
+  const currentCourses = sortedCourses.slice(indexOfFirstCourse, indexOfLastCourse);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -119,8 +145,9 @@ export default function CoursesPage({courses, setCourses, students, setStudents,
   };
 
   useEffect(() => {
-    saveData();
-  }, [courses]);
+    setCurrentPage(1); 
+  }, [searchTerm]);
+  
 
   return (
     <div className='courses'>
@@ -162,11 +189,11 @@ export default function CoursesPage({courses, setCourses, students, setStudents,
           </button>
 
           <CSVLink filename={"Courses.csv"} className='createBtn csvLink' data={courses} headers={headers}>Export CSV</CSVLink>;
-          <Button children='Add a Course' buttonSize='btn--medium' buttonStyle='btn--outline'  onClick={() => { setcreateCourseOpen(true); saveData() }} />
+          <Button children='Add a Course' buttonSize='btn--medium' buttonStyle='btn--outline'  onClick={() => { setCourseToEdit(null); setcreateCourseOpen(true);}} />
         </div>
       </div>
-      <Table courses={currentCourses} deleteCourse={handleDeleteCourse} editCourse={handleEditCourse} />
-      {createCourseOpen && <CreateCourse headers={headers} onSubmit={handleAddCourse} defaultValue={courseToEdit !== null && courses[courseToEdit]} closeUser={() => { setcreateCourseOpen(false); }} />}
+      <Table courses={currentCourses} deleteCourse={handleDeleteCourse} editCourse={handleEditCourse} handleSort ={handleSort} sortOrder ={sortOrder} />
+      {createCourseOpen && <CreateCourse headers={headers} onSubmit={handleAddCourse} defaultValue={courseToEdit !== null && courses[courseToEdit]} closeUser={() => { setcreateCourseOpen(false); }} courses ={courses} />}
 
 
 

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button } from '../../Button.jsx';
 import '../../../styles/CreateUser.css'
+import CoursesPage from './CoursesPage.jsx';
 
-export const CreateCourse = ({ closeUser, onSubmit, defaultValue }) => {
-  // State variables for user input
+export const CreateCourse = ({courses, closeUser, onSubmit, defaultValue }) => {
+
 
   const [course, setCourse] = useState(defaultValue || {
     courseCode: '',
@@ -15,6 +16,10 @@ export const CreateCourse = ({ closeUser, onSubmit, defaultValue }) => {
   const validateForm = () => {
 
     if (course.courseCode && course.courseName && course.description) {
+      if(courses.some(c => c.courseCode === course.courseCode)) {
+        setErrors('Course Already Exists')
+        return false
+      }
       setErrors('')
       return true
     } else {
@@ -24,24 +29,24 @@ export const CreateCourse = ({ closeUser, onSubmit, defaultValue }) => {
           errorFields.push(key)
         }
       }
-      setErrors(errorFields.join(', '))
+      setErrors('The following fields are empty: ' + errorFields.join(', '))
       return false
     }
 
   }
 
-  // Function to handle form submission
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    if (!validateForm()) return; // validate first if fields are empty or not
+    if (!validateForm()) return; 
 
-    // Pass data to parent component which is StudentsPage.js
+
     if (onSubmit) {
       onSubmit(course);
     }
 
-    // Close the form after submission
+
     closeUser()
   };
 
@@ -103,7 +108,7 @@ export const CreateCourse = ({ closeUser, onSubmit, defaultValue }) => {
           </div>
           <div style={{ display: 'flex' }}>
             <Button id='btn' children='Submit' buttonSize='btn--medium' buttonStyle='btn--outline' onClick={handleFormSubmit} />
-            {errors && <div style={styles}>{`Fields are empty: ${errors}`}</div>}
+            {errors && <div style={styles}>{errors}</div>}
           </div>
 
         </form>

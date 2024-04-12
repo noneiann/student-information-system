@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { Button } from '../../Button.jsx';
 import '../../../styles/CreateUser.css'
-import axios from 'axios';
 
 export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue }) => {
-  // State variables for user input
-
-  const goodKey = '0123456789- ';
-  const [student, setStudent] = useState(defaultValue || {
-    idNumber: '',
-    name: '',
-    yearLevel: '1st Year',
-    gender: 'Male',
-    courseCode: '', 
-    courseName: '', 
-    enrollmentStatus:'Not Enrolled',
-  });
+  
+  const [student, setStudent] = useState(
+    defaultValue || {
+      idNumber: '',
+      name: '',
+      yearLevel: '1st Year',
+      gender: 'Male',
+      courseCode: '',
+      courseName: '',
+      enrollmentStatus: 'Not Enrolled',
+    }
+  );
   const styles = {
     margin: 'auto',
     color: 'rgba(255,0,0,0.5)',
@@ -28,16 +27,20 @@ export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue
   const validateForm = () => {
 
     if (student.idNumber && student.name) {
+      if (!defaultValue && students.some(s => s.idNumber === student.idNumber)) {
+        setErrors('ID number already exists');
+        return false;
+      }
       setErrors('')
       return true
     } else {
       let errorFields = [];
       for (const [key, value] of Object.entries(student)) {
-        if (!value) {
-          errorFields.push(key)
-        }
+      if (key !== 'courseCode' && key !== 'courseName' && key !== 'enrollmentStatus' && !value) {
+        errorFields.push(key);
       }
-      setErrors(errorFields.join(', '))
+      }
+      setErrors(`The following fields are empty: ${errorFields.join(', ')}`)
       return false
     }
 
@@ -45,18 +48,17 @@ export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue
 
 
 
-  // Function to handle form submission
+
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    const temp = document.getElementById('course')
-    setStudent({ ...student, [temp.key]: temp.value });
+
     if (!validateForm()) return;
-    // Pass data to parent component which is StudentsPage.js
     if (onSubmit) {
       onSubmit(student);
     }
-    // Close the form after submission  
+
     closeUser()
   };
 
@@ -96,24 +98,32 @@ export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue
 
   const handleChange = (e) => {
     if (e.target.name === "course") {
-      const selectedCourse = courses.find(c => `${c.courseCode}  ${c.courseName}` === e.target.value);
-      if (selectedCourse) {
-        setStudent({
-          ...student,
-          courseCode: selectedCourse.courseCode,
-          courseName: selectedCourse.courseName,
-        });
-      } else {
+      const selectedValue = e.target.value;
+      if (selectedValue === "none") {
         setStudent({
           ...student,
           courseCode: '',
           courseName: '',
+          enrollmentStatus: 'Not Enrolled',
         });
+      } else {
+        const selectedCourse = courses.find(
+          (c) => `${c.courseCode}  ${c.courseName}` === selectedValue
+        );
+        if (selectedCourse) {
+          setStudent({
+            ...student,
+            courseCode: selectedCourse.courseCode,
+            courseName: selectedCourse.courseName,
+            enrollmentStatus: 'Enrolled',
+          });
+        }
       }
     } else {
       setStudent({ ...student, [e.target.name]: e.target.value });
     }
   };
+  
 
   return (
     <div className={`popUp-container`} onClick={(e) => {
@@ -166,28 +176,13 @@ export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue
               className='form-control'
               id='course'
               name="course"
-              value={student.course}
+              value={student.courseCode ? `${student.courseCode}  ${student.courseName}` : 'none'}
               onChange={handleChange}
             >
-              <option value="none" defaultValue>Select an Option</option>
-              {courses.map((c, idx) => <option value={`${c.courseCode}  ${c.courseName}`}>{c.courseCode}</option>)}
-
-            </select>
-          </div>
-
-          <div className='inputDiv'>
-            <label htmlFor="course">Enrollment Status: </label>
-            <select
-              type="text"
-              className='form-control'
-              id='enrollmentStatus'
-              name="enrollmentStatus"
-              value={student.enrollmentStatus}
-              onChange={handleChange}
-            >
-              
-              <option value="Not Enrolled" defaultValue>Not Enrolled</option>
-              {student.courseCode && <option value="Enrolled">Enrolled</option>}
+            <option value="none">No Course</option>
+            {courses.map((c, idx) => (
+            <option key={idx} value={`${c.courseCode}  ${c.courseName}`}>{c.courseCode}</option>
+            ))}            
             </select>
           </div>
           <div className='inputDiv'>
@@ -208,7 +203,7 @@ export const CreateUser = ({ courses,students, closeUser, onSubmit, defaultValue
           </div>
           <div style={{ display: 'flex' }}>
             <Button id='btn' children='Submit' buttonSize='btn--medium' buttonStyle='btn--outline' onClick={handleFormSubmit} />
-            {errors && <div style={styles}>{`Fields are empty: ${errors}`}</div>}
+            {errors && <div style={styles}>{errors}</div>}
           </div>
         </form>
       </div>

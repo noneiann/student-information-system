@@ -2,18 +2,17 @@ import React, { useState } from 'react'
 import '../../../styles/courseTable.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPencil,faTrash, faArrowAltCircleUp, faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons';
 
 
-const Table = ({ courses, deleteCourse, editCourse }) => {
+const Table = ({ courses, deleteCourse, editCourse, handleSort, sortOrder }) => {
   return (
     <div className='courseTable-wrapper'>
       <table id='courseTable' className='courseTable table-striped'>
         <thead>
           <tr>
-            <th>Course Code</th>
-            <th>Course Name</th>
+            <th onClick={() => handleSort('courseCode')}>Course Code {sortOrder.column === 'courseCode' && (<span>{sortOrder.direction ==='asc' ? <FontAwesomeIcon icon={faArrowAltCircleUp} style={{color: "#d1d1d1",}} /> : <FontAwesomeIcon icon={faArrowAltCircleDown} style={{color: "#d1d1d1",}} />}</span>)}</th>
+            <th onClick={() => handleSort('courseName')}>Course Name {sortOrder.column === 'courseName' && (<span>{sortOrder.direction ==='asc' ? <FontAwesomeIcon icon={faArrowAltCircleUp} style={{color: "#d1d1d1",}} /> : <FontAwesomeIcon icon={faArrowAltCircleDown} style={{color: "#d1d1d1",}} />}</span>)}</th>
             <th className='expand'>Description</th>
             <th>Actions</th>
           </tr>

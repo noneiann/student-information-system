@@ -1,41 +1,81 @@
 idNumber,name,yearLevel,gender,courseCode,courseName,enrollmentStatus
-2022-0013,Avery Thompson,1st Year,Female,BSCJ,Bachelor of Science in Criminology and Justice,Not Enrolled
-2022-0014,Andrew Garcia,3rd Year,Male,BSBA,Bachelor of Science in Business Administration,Enrolled
-2022-0015,Abigail Martinez,2nd Year,Female,BSBIO,Bachelor of Science in Biology,Enrolled
-2022-0016,Joseph Robinson,4th Year,Male,BSADV,Bachelor of Science in Advertising,Not Enrolled
-2022-0017,Mia Hernandez,1st Year,Female,BSART,Bachelor of Science in Art,Enrolled
-2022-0018,William Gonzalez,3rd Year,Male,BSPSYCH,Bachelor of Science in Psychology,Enrolled
-2022-0019,Amelia Perez,2nd Year,Female,BSCE,Bachelor of Science in Civil Engineering,Not Enrolled
-2022-0020,Daniel Sanchez,4th Year,Male,BSCHEM,Bachelor of Science in Chemistry,Enrolled
-2022-0021,Harper Ramirez,1st Year,Female,BSMA,Bachelor of Science in Mathematics,Enrolled
-2022-0022,Elijah Torres,3rd Year,Male,BSED,Bachelor of Science in Education,Not Enrolled
-2022-0023,Evelyn Rivera,2nd Year,Female,,,Enrolled
-2022-0024,Benjamin Flores,4th Year,Male,BSPHY,Bachelor of Science in Physics,Enrolled
-2022-0025,Luna Gomez,1st Year,Female,BSCJ,Bachelor of Science in Criminology and Justice,Not Enrolled
-2022-0026,Liam Diaz,3rd Year,Male,BSBA,Bachelor of Science in Business Administration,Enrolled
-2022-0027,Nora Reyes,2nd Year,Female,BSBIO,Bachelor of Science in Biology,Enrolled
-2022-0028,Sebastian Morales,4th Year,Male,BSADV,Bachelor of Science in Advertising,Not Enrolled
-2022-0029,Aria Jimenez,1st Year,Female,BSART,Bachelor of Science in Art,Enrolled
-2022-0030,Jacob Ramos,3rd Year,Male,BSPSYCH,Bachelor of Science in Psychology,Enrolled
-2022-0031,Penelope Castillo,2nd Year,Female,BSCE,Bachelor of Science in Civil Engineering,Not Enrolled
-2022-0032,Ethan Vasquez,4th Year,Male,BSCHEM,Bachelor of Science in Chemistry,Enrolled
-2022-0033,Maya Santos,1st Year,Female,BSMA,Bachelor of Science in Mathematics,Enrolled
-2022-0034,Michael Salazar,3rd Year,Male,BSED,Bachelor of Science in Education,Not Enrolled
-2022-0035,Scarlett Garcia,2nd Year,Female,,,Enrolled
-2022-0036,Daniel Flores,4th Year,Male,BSPHY,Bachelor of Science in Physics,Enrolled
-2022-0037,Grace Hernandez,1st Year,Female,BSCJ,Bachelor of Science in Criminology and Justice,Not Enrolled
-2022-0038,Liam Rodriguez,3rd Year,Male,BSBA,Bachelor of Science in Business Administration,Enrolled
-2022-0039,Chloe Gonzalez,2nd Year,Female,BSBIO,Bachelor of Science in Biology,Enrolled
-2022-0040,Noah Perez,4th Year,Male,BSADV,Bachelor of Science in Advertising,Not Enrolled
-2022-0041,Layla Sanchez,1st Year,Female,BSART,Bachelor of Science in Art,Enrolled
-2022-0042,Mason Torres,3rd Year,Male,BSPSYCH,Bachelor of Science in Psychology,Enrolled
-2022-0043,Zoe Rivera,2nd Year,Female,BSCE,Bachelor of Science in Civil Engineering,Not Enrolled
-2022-0044,Jacob Flores,4th Year,Male,BSCHEM,Bachelor of Science in Chemistry,Enrolled
-2022-0045,Emma Gomez,1st Year,Female,BSMA,Bachelor of Science in Mathematics,Enrolled
-2022-0046,Michael Diaz,3rd Year,Male,BSED,Bachelor of Science in Education,Not Enrolled
-2022-0047,Isabella Reyes,2nd Year,Female,,,Enrolled
-2022-0048,William Morales,4th Year,Male,BSPHY,Bachelor of Science in Physics,Enrolled
-2022-0049,Sophia Jimenez,1st Year,Female,BSCJ,Bachelor of Science in Criminology and Justice,Not Enrolled
-2022-0050,Daniel Ramos,3rd Year,Male,BSBA,Bachelor of Science in Business Administration,Enrolled
-2022-0224,Rey Iann V. Tigley,2nd Year,Male,BSCS,Bachelor of Science in Cybersecurity,Enrolled
-2022-0527,Elia Fel Bado,2nd Year,Female,BSCS,Bachelor of Science in Computer Science,Enrolled
+2022-0101,Emma Parker,1st Year,Female,BSCS,Bachelor of Science in Computer Science,Enrolled
+2022-0102,Noah Thompson,2nd Year,Male,BSIS,Bachelor of Science in Information Systems,Enrolled
+2022-0103,Olivia Johnson,3rd Year,Female,BSAA,Bachelor of Science in Agricultural Engineering,Enrolled
+2022-0104,Liam Smith,4th Year,Male,BSAD,Bachelor of Science in Agricultural Development,Enrolled
+2022-0105,Ava Brown,1st Year,Female,BSIT,Bachelor of Science in Information Technology,Enrolled
+2022-0106,William Williams,2nd Year,Male,BSMA,Bachelor of Science in Mathematics,Enrolled
+2022-0107,Sophia Jones,3rd Year,Female,BSBA,Bachelor of Science in Business Administration,Enrolled
+2022-0108,Alexander Davies,4th Year,Male,BSFN,Bachelor of Science in Food Nutrition,Enrolled
+2022-0109,Isabella Miller,1st Year,Female,BSHE,Bachelor of Science in Home Economics,Enrolled
+2022-0110,Ethan Wilson,2nd Year,Male,BSF,Bachelor of Science in Forestry,Enrolled
+2022-0111,Mia Taylor,3rd Year,Female,BSTRM,Bachelor of Science in Travel and Tourism Management,Enrolled
+2022-0112,Mason Anderson,4th Year,Male,BSAN,Bachelor of Science in Animal Science,Enrolled
+2022-0113,Sophia White,1st Year,Female,BSCA,Bachelor of Science in Computer Applications,Enrolled
+2022-0114,Lucas Martinez,2nd Year,Male,BSIS,Bachelor of Science in Information Systems,Enrolled
+2022-0115,Olivia Thompson,3rd Year,Female,BSAA,Bachelor of Science in Agricultural Engineering,Enrolled
+2022-0116,Ethan Brown,4th Year,Male,BSAD,Bachelor of Science in Agricultural Development,Enrolled
+2022-0117,Isabella Harris,1st Year,Female,BSIT,Bachelor of Science in Information Technology,Enrolled
+2022-0118,Liam Johnson,2nd Year,Male,BSMA,Bachelor of Science in Mathematics,Enrolled
+2022-0119,Emma Davis,3rd Year,Female,BSBA,Bachelor of Science in Business Administration,Enrolled
+2022-0120,Oliver Miller,4th Year,Male,BSFN,Bachelor of Science in Food Nutrition,Enrolled
+2022-0121,Ava Taylor,1st Year,Female,BSHE,Bachelor of Science in Home Economics,Enrolled
+2022-0122,Noah Wilson,2nd Year,Male,BSF,Bachelor of Science in Forestry,Enrolled
+2022-0123,Sophia Anderson,3rd Year,Female,BSTRM,Bachelor of Science in Travel and Tourism Management,Enrolled
+2022-0124,Ethan Garcia,4th Year,Male,BSAN,Bachelor of Science in Animal Science,Enrolled
+2022-0125,Isabella Martinez,1st Year,Female,BSCA,Bachelor of Science in Computer Applications,Enrolled
+2022-0126,Lucas Thomas,2nd Year,Male,BSIS,Bachelor of Science in Information Systems,Enrolled
+2022-0127,Olivia Harris,3rd Year,Female,BSAA,Bachelor of Science in Agricultural Engineering,Enrolled
+2022-0128,Ethan Brown,4th Year,Male,BSAD,Bachelor of Science in Agricultural Development,Enrolled
+2022-0129,Ava Johnson,1st Year,Female,BSIT,Bachelor of Science in Information Technology,Enrolled
+2022-0130,Noah Davies,2nd Year,Male,BSMA,Bachelor of Science in Mathematics,Enrolled
+2022-0131,Sophia Taylor,3rd Year,Female,BSBA,Bachelor of Science in Business Administration,Enrolled
+2022-0132,Oliver Wilson,4th Year,Male,BSFN,Bachelor of Science in Food Nutrition,Enrolled
+2022-0133,Isabella Anderson,1st Year,Female,BSHE,Bachelor of Science in Home Economics,Enrolled
+2022-0134,Liam Garcia,2nd Year,Male,BSF,Bachelor of Science in Forestry,Enrolled
+2022-0135,Emma Thomas,3rd Year,Female,BSTRM,Bachelor of Science in Travel and Tourism Management,Enrolled
+2022-0136,Noah Martinez,4th Year,Male,BSAN,Bachelor of Science in Animal Science,Enrolled
+2022-0137,Ava Thompson,1st Year,Female,BSCA,Bachelor of Science in Computer Applications,Enrolled
+2022-0138,Lucas Davis,2nd Year,Male,BSIS,Bachelor of Science in Information Systems,Enrolled
+2022-0139,Sophia Harris,3rd Year,Female,BSAA,Bachelor of Science in Agricultural Engineering,Enrolled
+2022-0140,Ethan Brown,4th Year,Male,BSAD,Bachelor of Science in Agricultural Development,Enrolled
+2022-0141,Isabella Johnson,1st Year,Female,BSIT,Bachelor of Science in Information Technology,Enrolled
+2022-0142,Oliver Davies,2nd Year,Male,BSMA,Bachelor of Science in Mathematics,Enrolled
+2022-0143,Liam Taylor,3rd Year,Female,BSBA,Bachelor of Science in Business Administration,Enrolled
+2022-0144,Emma Wilson,4th Year,Male,BSFN,Bachelor of Science in Food Nutrition,Enrolled
+2022-0145,Noah Anderson,1st Year,Female,BSHE,Bachelor of Science in Home Economics,Enrolled
+2022-0146,Ava Garcia,2nd Year,Male,BSF,Bachelor of Science in Forestry,Enrolled
+2022-0147,Lucas Thomas,3rd Year,Female,BSTRM,Bachelor of Science in Travel and Tourism Management,Enrolled
+2022-0148,Olivia Martinez,4th Year,Male,BSAN,Bachelor of Science in Animal Science,Enrolled
+2022-0149,Ethan Thompson,1st Year,Female,BSCA,Bachelor of Science in Computer Applications,Enrolled
+2022-0150,Isabella Davis,2nd Year,Male,BSIS,Bachelor of Science in Information Systems,Enrolled
+2022-0151,Liam Harris,3rd Year,Female,BSAA,Bachelor of Science in Agricultural Engineering,Enrolled
+2022-0152,Emma Brown,4th Year,Male,BSAD,Bachelor of Science in Agricultural Development,Enrolled
+2022-0153,Noah Johnson,1st Year,Female,BSIT,Bachelor of Science in Information Technology,Enrolled
+2022-0154,Sophia Davies,2nd Year,Male,BSMA,Bachelor of Science in Mathematics,Enrolled
+2022-0155,Oliver Taylor,3rd Year,Female,BSBA,Bachelor of Science in Business Administration,Enrolled
+2022-0156,Ava Wilson,4th Year,Male,BSFN,Bachelor of Science in Food Nutrition,Enrolled
+2022-0157,Lucas Anderson,1st Year,Female,BSHE,Bachelor of Science in Home Economics,Enrolled
+2022-0158,Olivia Garcia,2nd Year,Male,BSF,Bachelor of Science in Forestry,Enrolled
+2022-0159,Ethan Thomas,3rd Year,Female,BSTRM,Bachelor of Science in Travel and Tourism Management,Enrolled
+2022-0160,Isabella Martinez,4th Year,Male,BSAN,Bachelor of Science in Animal Science,Enrolled
+2022-0161,Liam Thompson,1st Year,Female,BSCA,Bachelor of Science in Computer Applications,Enrolled
+2022-0162,Emma Davis,2nd Year,Male,BSIS,Bachelor of Science in Information Systems,Enrolled
+2022-0163,Noah Harris,3rd Year,Female,BSAA,Bachelor of Science in Agricultural Engineering,Enrolled
+2022-0164,Sophia Brown,4th Year,Male,BSAD,Bachelor of Science in Agricultural Development,Enrolled
+2022-0165,Oliver Johnson,1st Year,Female,BSIT,Bachelor of Science in Information Technology,Enrolled
+2022-0166,Ava Davies,2nd Year,Male,BSMA,Bachelor of Science in Mathematics,Enrolled
+2022-0167,Lucas Taylor,3rd Year,Female,BSBA,Bachelor of Science in Business Administration,Enrolled
+2022-0168,Olivia Wilson,4th Year,Male,BSFN,Bachelor of Science in Food Nutrition,Enrolled
+2022-0169,Ethan Anderson,1st Year,Female,BSHE,Bachelor of Science in Home Economics,Enrolled
+2022-0170,Isabella Garcia,2nd Year,Male,BSF,Bachelor of Science in Forestry,Enrolled
+2022-0171,Liam Thomas,3rd Year,Female,BSTRM,Bachelor of Science in Travel and Tourism Management,Enrolled
+2022-0172,Emma Martinez,4th Year,Male,BSAN,Bachelor of Science in Animal Science,Enrolled
+2022-0173,Noah Thompson,1st Year,Female,BSCA,Bachelor of Science in Computer Applications,Enrolled
+2022-0174,Sophia Davis,2nd Year,Male,BSIS,Bachelor of Science in Information Systems,Enrolled
+2022-0175,Oliver Harris,3rd Year,Female,BSAA,Bachelor of Science in Agricultural Engineering,Enrolled
+2022-0176,Ava Brown,4th Year,Male,BSAD,Bachelor of Science in Agricultural Development,Enrolled
+2022-0177,Lucas Johnson,1st Year,Female,BSIT,Bachelor of Science in Information Technology,Enrolled
+2022-0178,Olivia Davies,2nd Year,Male,BSMA,Bachelor of Science in Mathematics,Enrolled
+2022-0179,Ethan Taylor,3rd Year,Female,BSBA,Bachelor of Science in Business Administration,Enrolled
+2022-0180,Isabella Wilson,4th Year,Male,BSFN,Bachelor of Science in Food Nutrition,Enrolled
