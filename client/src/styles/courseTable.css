@@ -1,5 +1,8 @@
 .courseTable-wrapper {
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .courseTable {
@@ -59,8 +62,8 @@
 }
 
 .expand {
-    width: 720px;
-    max-width: 720px;
+    width: 1150px;
+    max-width: 1500px;
     white-space: normal;
 }
 

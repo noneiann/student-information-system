@@ -1,25 +1,6 @@
-courseCode,courseName,description
-BSMA,Bachelor of Science in Mathematics,"A four-year degree program that delves into the study of numbers, patterns, and abstract reasoning, with applications in fields such as finance, engineering, and scientific research."
-BSAA,Bachelor of Science in Agricultural Engineering,"A four-year degree program that applies engineering principles to the agricultural industry, focusing on areas such as soil and water management, farm machinery design, and post-harvest processing."
-BSAB,Bachelor of Science in Animal Husbandry,"A four-year degree program that focuses on the breeding, care, and management of animals for food production, including livestock, poultry, and aquaculture."
-BSAD,Bachelor of Science in Agricultural Development,"A four-year degree program that integrates agricultural science, economics, and social sciences to address challenges in food production, sustainability, and rural development."
-BSAE,Bachelor of Science in Aviation Electronics,"A four-year degree program that covers the maintenance, repair, and operation of electronic systems used in aircraft, including instrumentation, navigation, communication, and autopilot systems."
-BSAN,Bachelor of Science in Animal Science,"A four-year degree program that applies biological principles to the production and management of animals for food, fiber, and companionship."
-BSAQS,Bachelor of Science in Aquaculture,"A four-year degree program that covers the breeding, rearing, and harvesting of aquatic organisms for food production, including fish, shrimp, and shellfish."
-BSAREG,Bachelor of Science in Agricultural Engineering Technology,"A four-year degree program that focuses on the application of engineering technologies in agriculture, including irrigation systems, farm machinery operation, and food processing equipment."
-BSART,Bachelor of Science in Art Education,"A four-year degree program that prepares graduates to teach visual arts in primary and secondary schools, covering areas such as drawing, painting, sculpture, and art history."
-BSBA,Bachelor of Science in Business Administration,"A four-year degree program that provides a broad foundation in business principles, including accounting, finance, marketing, management, and human resources."
-BSBM,Bachelor of Science in Business Management,"A four-year degree program that focuses on the development of managerial skills for businesses, covering areas such as leadership, decision-making, operations management, and marketing strategy."
-BSHRM,Bachelor of Science in Human Resource Management,"A four-year degree program that equips graduates to manage human resources within organizations, covering areas such as recruitment, training, compensation, and employee relations."
-BSENTRE,Bachelor of Science in Entrepreneurship,"A four-year degree program that fosters the skills and knowledge needed to start and manage new businesses, covering areas such as opportunity identification, business planning, marketing, and financial management."
-BSF,Bachelor of Science in Forestry,"A four-year degree program that covers the management and conservation of forest ecosystems, including forest ecology, silviculture, forest harvesting, and forest products utilization."
-BSFN,Bachelor of Science in Food Nutrition,A four-year degree program that combines food science and nutrition to promote healthy eating habits and address food-related health issues.
-BSGEOL,Bachelor of Science in Geology,"A four-year degree program that studies the Earth's composition, structure, and processes, including minerals, rocks, fossils, and geologic hazards."
-BSHE,Bachelor of Science in Home Economics,"A four-year degree program that equips graduates with skills for managing a household, including food preparation, nutrition, clothing and textiles, and family resource management."
-BST,Bachelor of Science in Tourism,"A four-year degree program that focuses on the management and promotion of tourism destinations, including hospitality management, tour operations, and tourism marketing."
-BSP,Bachelor of Science in Pharmacy,"A four-year degree program that prepares graduates to work as pharmacists, covering areas such as pharmaceutical science, drug therapy, and patient care."
-BSTRM,Bachelor of Science in Travel and Tourism Management,"A four-year degree program that prepares graduates for careers in the travel and tourism industry, covering areas such as destination management, tourism planning, and hospitality services."
-BSCS,Bachelor of Science in Computer Science,"A four-year degree program that covers the theoretical foundations and practical applications of computing, including software development, algorithms, data structures, and computer systems."
-BSIS,Bachelor of Science in Information Systems,"A four-year degree program that focuses on the design, implementation, and management of information systems in organizations, covering areas such as database management, systems analysis, and information technology governance."
-BSCA,Bachelor of Science in Computer Applications,"A four-year degree program that emphasizes the development and deployment of software applications, covering programming languages, software engineering principles, and application development frameworks."
-BSIT,Bachelor of Science in Information Technology,"A four-year degree program that prepares graduates for careers in managing information technology resources, covering areas such as network administration, cybersecurity, database management, and web development."
+idNumber,name,yearLevel,gender,courseCode,courseName,enrollmentStatus
+2022-0102,Noah Thompson,2nd Year,Male,BSIS,Bachelor of Science in Information System,Enrolled
+2022-0103,Olivia Johnson,3rd Year,Female,,,Not Enrolled
+2022-0104,Liam Smith,4th Year,Male,BSAD,Bachelor of Science in Agricultural Development,Enrolled
+2022-0105,Ava Brown,1st Year,Female,BSIT,Bachelor of Science in Information Technology,Enrolled
+2022-0106,William Williams,2nd Year,Male,,,Not Enrolled
