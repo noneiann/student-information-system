@@ -3,7 +3,8 @@ import { Button } from '../../Button.jsx';
 import '../../../styles/CreateUser.css'
 import CoursesPage from './CoursesPage.jsx';
 import axios from 'axios';
-export const CreateCourse = ({courses, closeUser, onSubmit, defaultValue }) => {
+
+export const EditCourse = ({courses, closeUser, onSubmit, defaultValue }) => {
 
 
   const [course, setCourse] = useState(defaultValue || {
@@ -16,7 +17,7 @@ export const CreateCourse = ({courses, closeUser, onSubmit, defaultValue }) => {
   const validateForm = () => {
 
     if (course.courseCode && course.courseName && course.description) {
-      if (courses.some(c => c.courseCode === course.courseCode)) {
+      if (!defaultValue && courses.some(c => c.courseCode === course.courseCode)) {
         setErrors('Course Already Exists')
         return false
       }
@@ -36,7 +37,7 @@ export const CreateCourse = ({courses, closeUser, onSubmit, defaultValue }) => {
   }
 
 
-  const handleFormSubmit =async (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     if (!validateForm()) return; 
@@ -44,16 +45,19 @@ export const CreateCourse = ({courses, closeUser, onSubmit, defaultValue }) => {
 
     if (onSubmit) {
       onSubmit(course);
+      console.log(course)
     }
+
     try {
-     await axios.post('/add-course', course)    
-     closeUser() 
+      const courseToUpdate = defaultValue.courseCode
+     await axios.put('/edit-course/' + courseToUpdate, course)
+     console.log(courseToUpdate)
+    
     }
-    catch (error) {
-      console.log(error)
-    }
-
-
+     catch (error) {
+        console.log(error)
+     }
+    closeUser()
   };
 
 

@@ -3,7 +3,7 @@ import { Button } from "../../Button.jsx";
 import "../../../styles/CreateUser.css";
 import axios from "axios";
 
-export const CreateUser = ({
+export const EditUser = ({
 	courses,
 	students,
 	closeUser,
@@ -31,13 +31,6 @@ export const CreateUser = ({
 
 	const [errors, setErrors] = useState("");
 	const validateForm = () => {
-		if (
-			document.getElementById("idNumberYear").value.length !== 4 ||
-			document.getElementById("idNumberFinal").value.length !== 4
-		) {
-			setErrors("ID number must be 8 characters long");
-			return false;
-		}
 		if (student.idNumber && student.name) {
 			if (
 				!defaultValue &&
@@ -65,20 +58,21 @@ export const CreateUser = ({
 		}
 	};
 
-	const handleFormSubmit = async (e) => {
-		e.preventDefault();
+	const handleFormSubmit = async (event) => {
+		event.preventDefault();
 
 		if (!validateForm()) return;
 		if (onSubmit) {
 			onSubmit(student);
 		}
-
 		try {
 			if (student.courseCode === "") {
 				student.courseCode = null;
 			}
-			await axios.post("/add-student", student);
-		} catch (err) {}
+			await axios.put("/api/" +student.idNumber, student);
+		} catch (err) {
+			console.error(err);
+		}
 		closeUser();
 	};
 
@@ -103,7 +97,7 @@ export const CreateUser = ({
 	};
 
 	const handleIdNumChange = (e) => {
-		let filteredValue = e.target.value.replace(/[^0-9 ]/g, "");
+		let filteredValue = e.target.value.replace(/[^0-9\- ]/gi, "");
 		filteredValue = filteredValue.slice(0, 4);
 		setIdNumberNum(filteredValue);
 		setIdNumberYear(idNumberYear);
@@ -206,7 +200,7 @@ export const CreateUser = ({
 									: "none"
 							}
 							onChange={handleChange}>
-							<option value='null'>No Course</option>
+							<option value='none'>No Course</option>
 							{courses.map((c, idx) => (
 								<option key={idx} value={`${c.courseCode}  ${c.courseName}`}>
 									{c.courseCode}
@@ -222,10 +216,10 @@ export const CreateUser = ({
 							id='yearLevel'
 							value={student.yearLevel}
 							onChange={handleChange}>
-							<option value='1'>1st Year</option>
-							<option value='2'>2nd Year</option>
-							<option value='3'>3rd Year</option>
-							<option value='4'>4th Year</option>
+							<option value='1st Year'>1st Year</option>
+							<option value='2nd Year'>2nd Year</option>
+							<option value='3rd Year'>3rd Year</option>
+							<option value='4th Year'>4th Year</option>
 						</select>
 					</div>
 					<div className='inputDiv'>
