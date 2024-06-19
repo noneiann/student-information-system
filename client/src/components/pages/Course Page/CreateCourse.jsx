@@ -16,7 +16,7 @@ export const CreateCourse = ({courses, closeUser, onSubmit, defaultValue }) => {
   const validateForm = () => {
 
     if (course.courseCode && course.courseName && course.description) {
-      if(courses.some(c => c.courseCode === course.courseCode)) {
+      if(!defaultValue && courses.some(c => c.courseCode === course.courseCode)) {
         setErrors('Course Already Exists')
         return false
       }
